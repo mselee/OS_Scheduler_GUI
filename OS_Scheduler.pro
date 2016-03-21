@@ -24,3 +24,5 @@ HEADERS  += mainwindow.h \
     Scheduler.h
 
 FORMS    += mainwindow.ui
+
+CONFIG += c++11

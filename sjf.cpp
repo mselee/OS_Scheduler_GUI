@@ -1,25 +1,24 @@
 #include "Scheduler.h"
-size_t current_time = 0;
 
-struct CompareArrivalBurst {
-	bool operator()(Process* lhs, Process* rhs) {
-		double t1 = lhs->getArrivalTime();
-		double t2 = rhs->getArrivalTime();
-		if (current_time >= t1 && current_time >= t2)
-			return lhs->getRemainingTime(current_time) <= rhs->getRemainingTime(current_time);
-		if (t1 < t2)
-			return true;
-		else if (t1 == t2)
-			return lhs->getRemainingTime(current_time) <= rhs->getRemainingTime(current_time);
-		else
-			return false;
-	}
-};
+void Scheduler::sortSJF() {
+    _queue.sort([&](Process* & lhs, Process* & rhs) {
+        double t1 = lhs->getArrivalTime();
+        double t2 = rhs->getArrivalTime();
+        if (current_time >= t1 && current_time >= t2)
+            return lhs->getRemainingTime(current_time) <= rhs->getRemainingTime(current_time);
+        if (t1 < t2)
+            return true;
+        else if (t1 == t2)
+            return lhs->getRemainingTime(current_time) <= rhs->getRemainingTime(current_time);
+        else
+            return false;
+    });
+}
 
 void Scheduler::sjf(bool prempt) {
 	int counter = 0;
 
-	_queue.sort(CompareArrivalBurst());
+    sortSJF();
 	Process* item = _queue.front();
 
 	while (true) {
@@ -31,14 +30,14 @@ void Scheduler::sjf(bool prempt) {
 				if (_queue.size() == 0) break;
 			}
 
-			_queue.sort(CompareArrivalBurst());
+            sortSJF();
 			if (_queue.front() != item)
 			{
 				item->stop(current_time);
 				item = _queue.front();
 			}
 
-			if (!item->isWorking() && top->getArrivalTime() <= time)
+            if (!item->isWorking() && item->getArrivalTime() <= current_time)
 			{
 				item->start(current_time);
 			}

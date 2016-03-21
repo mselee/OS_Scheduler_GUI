@@ -8,11 +8,15 @@ class Scheduler
 {
 
 private:
-	list<Process*> _queue;
+    size_t current_time;
+    list<Process*> _queue;
+    void sortSJF();
+    void sortPriority();
 
 public:
 	Scheduler(list<Process*> queue) {
 		_queue = queue;
+        current_time = 0;
 	}
 
     ~Scheduler() {

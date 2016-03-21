@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    fcfs.cpp \
+    priority.cpp \
+    roundRobin.cpp \
+    sjf.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    Process.h \
+    Scheduler.h
 
 FORMS    += mainwindow.ui

@@ -1,15 +1,12 @@
 #include  <iostream>
 #include "Scheduler.h"
 using namespace std;
-void Scheduler::roundRobin ()
+void Scheduler::roundRobin(double quantum)
 {
         list<Process*>::iterator pointer;
         pointer =_queue.begin();
-    double x;
-    double total_waiting_time =0;
-    double avg_waiting_time;
-    cout<< "Enter Quantum Time" << endl ;
-        cin >> x ;
+        double total_waiting_time =0;
+        double avg_waiting_time;
         double z=_queue.size();
         double Time =0 ;
 
@@ -26,10 +23,10 @@ void Scheduler::roundRobin ()
             if((*pointer)->getArrivalTime() <=Time)
             {
                 (*pointer)->start(Time);
-                if((*pointer)->getRemainingTime(Time) < x)
+                if((*pointer)->getRemainingTime(Time) < quantum)
                     Time += (*pointer)->getRemainingTime(Time);
                 else
-                    Time += x;
+                    Time += quantum;
                 (*pointer) ->stop(Time);
             if((*pointer)->isFinished())
                 {

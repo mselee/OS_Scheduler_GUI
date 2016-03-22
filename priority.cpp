@@ -26,7 +26,7 @@ void Scheduler::priority(bool prempt) {
 		while(_queue.size() != 0) {
             if (top->getRemainingTime(current_time) == 0)
 			{
-                top->stop(current_time);
+                stop(top);
 				totalWaiting += top->getWaitingTime();
 				delete top;
 				_queue.pop_front();
@@ -37,12 +37,12 @@ void Scheduler::priority(bool prempt) {
             sortPriority();
 			if (_queue.front() != top)
 			{
-                top->stop(current_time);
+                stop(top);
 				top = _queue.front();
 			}
 
             if (!top->isWorking() && top->getArrivalTime() <= current_time) {
-                top->start(current_time);
+                start(top);
 			}
 			
             current_time++;
@@ -52,9 +52,9 @@ void Scheduler::priority(bool prempt) {
 		while(_queue.size() > 0) {
             if(top->getArrivalTime() <= current_time) {
 				double latency = top->getBurstTime();
-                top->start(current_time);
+                start(top);
                 current_time += latency;
-                top->stop(current_time);
+                stop(top);
 				totalWaiting += top->getWaitingTime();
 				delete top;
                 sortPriority();

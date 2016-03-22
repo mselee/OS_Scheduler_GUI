@@ -17,9 +17,9 @@ void Scheduler::fcfs ()
     while(pointer != _queue.end())
     {
 
-        (*pointer)->start(Time);
+        start((*pointer));
         Time = Time + (*pointer)->getBurstTime();
-        (*pointer) -> stop(Time);
+        stop((*pointer));
         total_waiting_time+=(*pointer)->getWaitingTime();
         ++pointer;
     }

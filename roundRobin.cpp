@@ -25,12 +25,12 @@ void Scheduler::roundRobin ()
         {
             if((*pointer)->getArrivalTime() <=Time)
             {
-                (*pointer)->start(Time);
+                start((*pointer));
                 if((*pointer)->getRemainingTime(Time) < x)
                     Time += (*pointer)->getRemainingTime(Time);
                 else
                     Time += x;
-                (*pointer) ->stop(Time);
+                stop((*pointer));
             if((*pointer)->isFinished())
                 {
                     total_waiting_time+= (*pointer)->getWaitingTime();

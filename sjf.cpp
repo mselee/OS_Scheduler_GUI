@@ -23,7 +23,7 @@ void Scheduler::sjf(bool prempt) {
 
 	while (true) {
 			if (item->getRemainingTime(current_time) == 0) {
-				item->stop(current_time);
+				stop(item);
 				delete item;
 				_queue.pop_front();
 				item = _queue.front();
@@ -33,13 +33,13 @@ void Scheduler::sjf(bool prempt) {
             sortSJF();
 			if (_queue.front() != item)
 			{
-				item->stop(current_time);
+				stop(item);
 				item = _queue.front();
 			}
 
             if (!item->isWorking() && item->getArrivalTime() <= current_time)
 			{
-				item->start(current_time);
+				start(item);
 			}
 			 
 

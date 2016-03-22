@@ -86,6 +86,10 @@ public:
 		return _working;
 	}
 
+    size_t getPID() {
+        return _pid;
+    }
+
 private:
 	size_t _pid;
 	double _startTime, _stopTime, _finishTime;

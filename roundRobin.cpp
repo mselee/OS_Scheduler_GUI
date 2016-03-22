@@ -1,5 +1,5 @@
 #include  <iostream>
-#include "scheduler.h"
+#include "Scheduler.h"
 using namespace std;
 void Scheduler::roundRobin ()
 {

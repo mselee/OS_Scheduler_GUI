@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     Process.h \
-    Scheduler.h
+    Scheduler.h \
+    log.h
 
 FORMS    += mainwindow.ui
 

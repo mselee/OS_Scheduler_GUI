@@ -49,7 +49,7 @@ public:
 	void sjf(bool prempt=false);
 	void fcfs();
 	void priority(bool prempt=false);
-	void roundRobin();
+    void roundRobin(double quantum);
 };
 
 #endif

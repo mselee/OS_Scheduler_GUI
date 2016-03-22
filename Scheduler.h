@@ -3,6 +3,7 @@
 
 #include <list>
 #include "Process.h"
+#include <queue>
 
 class Scheduler
 {
@@ -10,6 +11,7 @@ class Scheduler
 private:
     size_t current_time;
     list<Process*> _queue;
+//    queue<Log> log;
     void sortSJF();
     void sortPriority();
 

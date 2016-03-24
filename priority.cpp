@@ -3,15 +3,16 @@
  void Scheduler::sortPriority()
  {
     _queue.sort([&](Process* & lhs, Process* & rhs) {
-        if(lhs->getArrivalTime() < rhs->getArrivalTime())
+        double t1 = lhs->getArrivalTime();
+        double t2 = rhs->getArrivalTime();
+        if (current_time >= t1 && current_time >= t2)
+            return lhs->getPriority() <= rhs->getPriority();
+        if (t1 < t2)
             return true;
-        if (lhs->getArrivalTime() == rhs->getArrivalTime())
-        {
-            if (lhs->getPriority() > rhs->getPriority())
-                return true;
+        else if (t1 == t2)
+            return lhs->getPriority() <= rhs->getPriority();
+        else
             return false;
-        }
-        return false;
     });
  };
 
@@ -49,16 +50,16 @@ void Scheduler::priority(bool prempt) {
 		}
 	}
 	else {
-		while(_queue.size() > 0) {
+            while(_queue.size() > 0) {
             if(top->getArrivalTime() <= current_time) {
+                sortPriority();
+                top = _queue.front();
 				double latency = top->getBurstTime();
                 start(top);
                 current_time += latency;
                 stop(top);
 				totalWaiting += top->getWaitingTime();
 				delete top;
-                sortPriority();
-				top = _queue.front();
 				_queue.pop_front();
 			}
             else current_time++;

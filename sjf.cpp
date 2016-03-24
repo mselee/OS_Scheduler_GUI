@@ -26,14 +26,15 @@ void Scheduler::sjf(bool prempt) {
 				stop(item);
 				delete item;
 				_queue.pop_front();
-				item = _queue.front();
-				if (_queue.size() == 0) break;
-			}
+                item = _queue.front();
+                if (_queue.size() == 0) break;
+            }
 
             sortSJF();
 			if (_queue.front() != item)
 			{
-				stop(item);
+                if(item->isWorking())
+                    stop(item);
 				item = _queue.front();
 			}
 
@@ -43,9 +44,9 @@ void Scheduler::sjf(bool prempt) {
 			}
 			 
 
-			if (!prempt || _queue.size() == 1)
+            if ((!prempt || _queue.size() == 1) && item->isWorking())
 				current_time += item->getRemainingTime(current_time);
-			else
+            else
 				current_time += 1;
 
 		

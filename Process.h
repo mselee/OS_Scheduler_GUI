@@ -20,7 +20,8 @@ public:
 	void start(double time) {
 		if (_working)
 		{
-			throw("Process already running!");
+            cout << "Process already running!";
+//			throw("Process already running!");
 		}
 
 		_startTime = time;
@@ -33,13 +34,15 @@ public:
 	void stop(double time) {
 		if (!_working)
 		{
-			throw("Process not running!");
+            cout << "Process not running!";
+//			throw("Process not running!");
 		}
 
 		double latency = time - _startTime;
 		if (latency > _burstTime)
 		{
-			throw("Process finishes before stopping!!");
+            cout << "Process finishes before stopping!!";
+//			throw("Process finishes before stopping!!");
 		}
 
 		_remainingTime -= latency;

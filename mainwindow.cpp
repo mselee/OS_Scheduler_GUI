@@ -9,7 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     vLayout = new QVBoxLayout();
+    sim_vLayout = new QVBoxLayout();
     ui->scrollAreaWidgetContents->setLayout(vLayout);
+    ui->scrollAreaWidgetContents_2->setLayout(sim_vLayout);
+    sim_vLayout->setAlignment(Qt::AlignTop);
+    sim_vLayout->setMargin(1);
 }
 
 MainWindow::~MainWindow()
@@ -82,5 +86,32 @@ void MainWindow::on_btnStart_clicked()
         break;
     default:
         break;
+    }
+
+    draw(scheduler->getLog());
+}
+
+void MainWindow::draw(list<Log*> log) {
+
+    for(list<Log*>::iterator it = log.begin();it != log.end(); ++it){
+        double start = (*it)->startTime();
+        double finish = (*it)->finishTime();
+        QWidget *horizontalWidget = new QWidget();
+        QHBoxLayout *hlayout = new QHBoxLayout(horizontalWidget);
+
+        QWidget* process = new QWidget(horizontalWidget);
+        double period = finish - start;
+        string colour = (*it)->colour();
+
+        process->setFixedHeight(10);
+        process->setFixedWidth(start + period);
+        process->setStyleSheet(QString::fromStdString("margin-left: " + to_string(start) + ";" + "background-color: " + colour + ";"));
+
+
+        hlayout->setAlignment(Qt::AlignLeft);
+
+        hlayout->addWidget(process);
+
+        sim_vLayout->addWidget(horizontalWidget);
     }
 }

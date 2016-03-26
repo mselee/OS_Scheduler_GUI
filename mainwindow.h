@@ -29,9 +29,12 @@ private slots:
 
     void on_btnStart_clicked();
 
+    void draw(list<Log*> log);
+
 private:
     Ui::MainWindow *ui;
     QVBoxLayout* vLayout;
+    QVBoxLayout* sim_vLayout;
     int index = 0;
     Scheduler* scheduler;
 };

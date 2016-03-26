@@ -1,7 +1,7 @@
 class Log {
 private:
-    size_t _start;
-    size_t _stop;
+    double _start;
+    double _stop;
     size_t _pid;
     string _colour;
 
@@ -17,11 +17,11 @@ public:
         return _pid;
     }
 
-    size_t startTime() {
+    double startTime() {
         return _start;
     }
 
-    size_t finishTime() {
+    double finishTime() {
         return _stop;
     }
 

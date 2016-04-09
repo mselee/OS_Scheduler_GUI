@@ -10,10 +10,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     vLayout = new QVBoxLayout();
     sim_vLayout = new QVBoxLayout();
+
+    sim_processes = new QWidget();
+    sim_timeline = new QWidget();
+
+    sim_hLayout1 = new QHBoxLayout(sim_processes);
+    sim_hLayout2 = new QHBoxLayout(sim_timeline);
+
     ui->scrollAreaWidgetContents->setLayout(vLayout);
     ui->scrollAreaWidgetContents_2->setLayout(sim_vLayout);
+
     sim_vLayout->setAlignment(Qt::AlignTop);
     sim_vLayout->setMargin(1);
+
+    sim_vLayout->addWidget(sim_processes);
+    sim_vLayout->addWidget(sim_timeline);
 }
 
 MainWindow::~MainWindow()
@@ -96,22 +107,58 @@ void MainWindow::draw(list<Log*> log) {
     for(list<Log*>::iterator it = log.begin();it != log.end(); ++it){
         double start = (*it)->startTime();
         double finish = (*it)->finishTime();
-        QWidget *horizontalWidget = new QWidget();
-        QHBoxLayout *hlayout = new QHBoxLayout(horizontalWidget);
+//        QWidget *horizontalWidget = new QWidget();
+//        QHBoxLayout *hlayout = new QHBoxLayout(horizontalWidget);
 
-        QWidget* process = new QWidget(horizontalWidget);
+        QWidget* process = new QWidget();
         double period = finish - start;
         string colour = (*it)->colour();
+        size_t pid = (*it)->pid();
 
-        process->setFixedHeight(10);
+        QHBoxLayout *p_hlayout = new QHBoxLayout(process);
+
+        process->setFixedHeight(50);
         process->setFixedWidth(start + period);
-        process->setStyleSheet(QString::fromStdString("margin-left: " + to_string(start) + ";" + "background-color: " + colour + ";"));
+        process->setStyleSheet(QString::fromStdString("padding: 0; background-color: " + colour + ";"));
+
+        QLabel *process_label = new QLabel(process);
+        process_label->setText(QString::fromStdString("P"+to_string(pid)));
+        process_label->setStyleSheet("margin: 0;");
 
 
-        hlayout->setAlignment(Qt::AlignLeft);
+        p_hlayout->addWidget(process_label);
 
-        hlayout->addWidget(process);
+        p_hlayout->setAlignment(Qt::AlignRight);
 
-        sim_vLayout->addWidget(horizontalWidget);
+        sim_hLayout1->setAlignment(Qt::AlignLeft);
+        sim_hLayout1->setSpacing(0);
+
+
+//        hlayout->addWidget(process);
+
+        sim_hLayout1->addWidget(process);
+
+        QWidget* timeChunk = new QWidget();
+        QHBoxLayout* t_hlayout = new QHBoxLayout(timeChunk);
+
+        timeChunk->setFixedHeight(30);
+        timeChunk->setFixedWidth(start + period);
+
+
+        QLabel *t_label = new QLabel(timeChunk);
+        if(it == log.begin()) {
+            QLabel *t_start = new QLabel(timeChunk);
+            t_start->setText(QString::number(start));
+            t_start->setAlignment(Qt::AlignLeft);
+        }
+        t_label->setText(QString::number(finish));
+
+        t_hlayout->addWidget(t_label);
+
+        t_hlayout->setAlignment(Qt::AlignRight);
+        sim_hLayout2->setAlignment(Qt::AlignLeft);
+        sim_hLayout2->setSpacing(0);
+
+        sim_hLayout2->addWidget(timeChunk);
     }
 }

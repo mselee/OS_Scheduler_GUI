@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include <QLineEdit>
+#include <QLabel>
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <list>
@@ -35,6 +36,10 @@ private:
     Ui::MainWindow *ui;
     QVBoxLayout* vLayout;
     QVBoxLayout* sim_vLayout;
+    QWidget* sim_processes;
+    QWidget* sim_timeline;
+    QHBoxLayout* sim_hLayout1;
+    QHBoxLayout* sim_hLayout2;
     int index = 0;
     Scheduler* scheduler;
 };

@@ -119,11 +119,10 @@ void MainWindow::draw(list<Log*> log) {
 
         process->setFixedHeight(50);
         process->setFixedWidth(start + period);
-        process->setStyleSheet(QString::fromStdString("padding: 0; background-color: " + colour + ";"));
+        process->setStyleSheet(QString::fromStdString("background-color: " + colour + ";"));
 
         QLabel *process_label = new QLabel(process);
         process_label->setText(QString::fromStdString("P"+to_string(pid)));
-        process_label->setStyleSheet("margin: 0;");
 
 
         p_hlayout->addWidget(process_label);

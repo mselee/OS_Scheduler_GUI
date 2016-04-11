@@ -100,6 +100,8 @@ void MainWindow::on_btnStart_clicked()
     }
 
     draw(scheduler->getLog());
+
+    delete scheduler;
 }
 
 void MainWindow::draw(list<Log*> log) {
@@ -111,14 +113,14 @@ void MainWindow::draw(list<Log*> log) {
 //        QHBoxLayout *hlayout = new QHBoxLayout(horizontalWidget);
 
         QWidget* process = new QWidget();
-        double period = finish - start;
+        double period = (finish - start) * 30;
         string colour = (*it)->colour();
         size_t pid = (*it)->pid();
 
         QHBoxLayout *p_hlayout = new QHBoxLayout(process);
 
         process->setFixedHeight(50);
-        process->setFixedWidth(start + period);
+        process->setFixedWidth(period);
         process->setStyleSheet(QString::fromStdString("background-color: " + colour + ";"));
 
         QLabel *process_label = new QLabel(process);
@@ -127,7 +129,7 @@ void MainWindow::draw(list<Log*> log) {
 
         p_hlayout->addWidget(process_label);
 
-        p_hlayout->setAlignment(Qt::AlignRight);
+        p_hlayout->setAlignment(Qt::AlignLeft);
 
         sim_hLayout1->setAlignment(Qt::AlignLeft);
         sim_hLayout1->setSpacing(0);
@@ -141,7 +143,7 @@ void MainWindow::draw(list<Log*> log) {
         QHBoxLayout* t_hlayout = new QHBoxLayout(timeChunk);
 
         timeChunk->setFixedHeight(30);
-        timeChunk->setFixedWidth(start + period);
+        timeChunk->setFixedWidth(period);
 
 
         QLabel *t_label = new QLabel(timeChunk);
